@@ -30,7 +30,7 @@
     <artifactId>oak-auth-external</artifactId>
     <name>Oak External Authentication Support</name>
     <packaging>bundle</packaging>
-
+    <version>1.2.14-OAK-4696</version>
     <build>
         <plugins>
             <plugin>
@@ -103,7 +103,7 @@
         <dependency>
             <groupId>org.apache.jackrabbit</groupId>
             <artifactId>oak-core</artifactId>
-            <version>${project.version}</version>
+            <version>1.2.14</version>
         </dependency>
 
         <dependency>
@@ -144,7 +144,7 @@
         <dependency>
             <groupId>org.apache.jackrabbit</groupId>
             <artifactId>oak-core</artifactId>
-            <version>${project.version}</version>
+            <version>1.2.14</version>
             <classifier>tests</classifier>
             <scope>test</scope>
         </dependency>

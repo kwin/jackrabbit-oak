@@ -49,6 +49,7 @@ import org.apache.jackrabbit.oak.spi.security.authentication.external.SyncContex
 import org.apache.jackrabbit.oak.spi.security.authentication.external.SyncException;
 import org.apache.jackrabbit.oak.spi.security.authentication.external.SyncHandler;
 import org.apache.jackrabbit.oak.spi.security.authentication.external.SyncManager;
+import org.apache.jackrabbit.oak.spi.security.authentication.external.SyncResult;
 import org.apache.jackrabbit.oak.spi.security.authentication.external.SyncedIdentity;
 import org.apache.jackrabbit.oak.spi.whiteboard.Whiteboard;
 import org.apache.jackrabbit.oak.spi.whiteboard.WhiteboardUtils;
@@ -316,12 +317,14 @@ public class ExternalLoginModule extends AbstractLoginModule {
             try {
                 DebugTimer timer = new DebugTimer();
                 context = syncHandler.createContext(idp, userManager, new ValueFactoryImpl(root, NamePathMapper.DEFAULT));
-                context.sync(user);
+                SyncResult result = context.sync(user);
                 timer.mark("sync");
-                root.commit();
-                timer.mark("commit");
+                if (result.getStatus() != SyncResult.Status.NOP) {
+                    root.commit();
+                    timer.mark("commit");
+                }
                 if (log.isDebugEnabled()) {
-                    log.debug("syncUser({}) {}", user.getId(), timer.getString());
+                    log.debug("syncUser({}) {}, result: ", user.getId(), timer.getString(), result.getStatus());
                 }
                 return;
             } catch (CommitFailedException e) {
