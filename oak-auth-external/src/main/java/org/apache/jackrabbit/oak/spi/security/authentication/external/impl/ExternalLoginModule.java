@@ -324,7 +324,7 @@ public class ExternalLoginModule extends AbstractLoginModule {
                     timer.mark("commit");
                 }
                 if (log.isDebugEnabled()) {
-                    log.debug("syncUser({}) {}, result: ", user.getId(), timer.getString(), result.getStatus());
+                    log.debug("syncUser({}) {}, result: {}", user.getId(), timer.getString(), result.getStatus());
                 }
                 return;
             } catch (CommitFailedException e) {
